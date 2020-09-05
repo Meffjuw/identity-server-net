@@ -1,0 +1,15 @@
+﻿using IdentityServer4.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace IdentityServer.Entities
+{
+    public class ClientGrantType
+    {
+        public int Id { get; set; }
+        public string GrantType { get; set; }
+        public int ClientId { get; set; }
+    }
+}
