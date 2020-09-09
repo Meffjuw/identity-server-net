@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using IdentityServer.Stores;
 using IdentityServer.Interfaces;
+using IdentityServer.Services;
 
 namespace IdentityServer
 {
@@ -44,7 +45,8 @@ namespace IdentityServer
 
                 .AddClientStore<ClientStore>()
                 .AddResourceStore<ResourceStore>()
-                .AddPersistedGrantStore<PersistedGrantStore>();
+                .AddPersistedGrantStore<PersistedGrantStore>()
+                .AddCorsPolicyService<CorsPolicyService>();
 
             //// this adds the config data from DB (clients, resources, CORS)
             //.AddConfigurationStore(options =>

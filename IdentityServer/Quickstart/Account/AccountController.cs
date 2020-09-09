@@ -3,6 +3,7 @@
 
 
 using IdentityModel;
+using IdentityServer.Entities;
 using IdentityServer.Interfaces;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -224,6 +225,10 @@ namespace IdentityServerHost.Quickstart.UI
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
+            if (vm.PostLogoutRedirectUri != null) {
+                return Redirect(vm.PostLogoutRedirectUri);
+            }
+
             return View("LoggedOut", vm);
         }
 
@@ -231,6 +236,27 @@ namespace IdentityServerHost.Quickstart.UI
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            var vm = new RegisterModel {
+                ReturnUrl = returnUrl
+            };
+
+            return View(vm);
+        }
+
+         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (model != null) {
+                ApplicationUser user = await _users.Create(model.Username, model.Password);
+            }
+
+            return Ok();
         }
 
 

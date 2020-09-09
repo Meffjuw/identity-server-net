@@ -7,11 +7,12 @@ namespace IdentityServer.Interfaces
 {
     public interface IUserStore
     {
+        Task<ApplicationUser> Create(string username, string password);
         Task<bool> ValidateCredentials(string username, string password);
-        Task<User> FindBySubjectId(string subjectId);
-        Task<User> FindByUsername(string username);
-        Task<User> FindByExternalProvider(string provider, string subjectId);
-        Task<User> AutoProvisionUser(string provider, string subjectId, List<Claim> claims);
-        Task<bool> SaveUser(User user, string newPasswordToHash = null);
+        Task<ApplicationUser> FindBySubjectId(string subjectId);
+        Task<ApplicationUser> FindByUsername(string username);
+        Task<ApplicationUser> FindByExternalProvider(string provider, string subjectId);
+        Task<ApplicationUser> AutoProvisionUser(string provider, string subjectId, List<Claim> claims);
+        Task<bool> SaveUser(ApplicationUser user, string newPasswordToHash = null);
     }
 }

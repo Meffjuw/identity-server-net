@@ -66,6 +66,9 @@ namespace IdentityServer.Stores
                 select * from ClientGrantTypes where ClientId = @Id
                 select * from ClientScopes where ClientId = @Id
                 select * from ClientSecrets where ClientId = @Id
+                SELECT * FROM [dbo].[ClientCorsOrigins] WHERE [ClientId] = @Id
+                SELECT * FROM [dbo].[ClientRedirectUris] WHERE [ClientId] = @Id
+                SELECT * FROM [dbo].[ClientPostLogoutRedirectUris] WHERE [ClientId] = @Id
             ", new { client.Id });
                 var grants = result.Read<ClientGrantType>() as List<ClientGrantType>;
 
@@ -84,6 +87,18 @@ namespace IdentityServer.Stores
                     Expiration = secret.Expiration,
                     Type = secret.Type
                 });
+
+                var corsOrigins = result.Read<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>() as List<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>;
+                
+                client.AllowedCorsOrigins = corsOrigins.ConvertAll(origin => origin.Origin);
+
+                var redirectUris = result.Read<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>() as List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>;
+            
+                client.RedirectUris = redirectUris.ConvertAll(uri => uri.RedirectUri);
+
+                var postLogoutUris = result.Read<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>() as List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>;
+            
+                client.PostLogoutRedirectUris = postLogoutUris.ConvertAll(uri => uri.PostLogoutRedirectUri);
             }
 
             return client;

@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace IdentityServer.Entities
 {
-    public class User
+    public class ApplicationUser
     {
         public int id = 0;
         public string SubjectId = string.Empty;
