@@ -39,4 +39,24 @@
     }
 }
 
+.login-form-wrapper {
+    padding: 24px;
+    width: 300px;
+}
 
+.login-form {
+    max-width: 300px;
+    margin: 8px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.ant-col-rtl .login-form-forgot {
+    float: left;
+}
+
+.login-form-button {
+    width: 100%;
+}
